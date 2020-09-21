@@ -3,4 +3,4 @@ set -e
 
 python /app/app/worker_pre_start.py
 
-rqworker -w app.worker.worker
+rqworker --url $REDIS_URI
