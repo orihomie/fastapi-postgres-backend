@@ -34,14 +34,14 @@ services:
       context: .
       dockerfile: rqworker.dockerfile
 
-#  backend:
-#    image: backend
-#    ports:
-#      - 10088:80
-#    depends_on:
-#      - db
-#    env_file:
-#      - .env
-#    build:
-#      context: .
-#      dockerfile: backend.dockerfile
+  backend:
+    image: backend
+    ports:
+      - 10088:80
+    depends_on:
+      - db
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: backend.dockerfile
