@@ -1,6 +1,3 @@
-from dotenv import load_dotenv
-load_dotenv(dotenv_path='./../.env', verbose=True)
-
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from app.api.api_v1.api import api_router
@@ -21,9 +18,3 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
-
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=10088)
