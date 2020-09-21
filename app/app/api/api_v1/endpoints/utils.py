@@ -5,7 +5,7 @@ from pydantic.networks import EmailStr
 
 from app import models, schemas
 from app.api import deps
-from app.core.celery_app import celery_app
+from app.core.celery_app import queue
 from app.utils import send_test_email
 
 router = APIRouter()
@@ -19,8 +19,10 @@ def test_celery(
     """
     Test Celery worker.
     """
-    celery_app.send_task("app.worker.test_celery", args=[msg.msg])
-    return {"msg": "Word received"}
+    from app.worker import test_rq
+    job = queue.enqueue(test_rq, (msg.msg,))
+    # celery_app.send_task("app.worker.test_celery", args=[msg.msg])
+    return {"msg": f"Word received and will be processed by job {job.id}"}
 
 
 @router.post("/test-email/", response_model=schemas.Msg, status_code=201)
